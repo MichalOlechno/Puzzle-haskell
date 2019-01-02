@@ -1,8 +1,46 @@
 ﻿import Data.Char
-
+import System.Console.ANSI
 -- dane testowe
-words1="ADORER":"ARROW":"BOUQUET":"BRIDE":"CARDS":"CARESS":"CHOCOLATE":"COUPLE":"CUPID":"DATE":"DATING":"DEVOTION":"EMBRACE":"FIRSTKISS":"GROOM":"HEART":"HUGS":"ISEULT":"JULIET":"LOVE":"LUCK":"LYRE":"ODE":"POEM":"PRESENT":"QUEEN":"RENDEZVOUS":"RING":"ROMEO":"ROSES":"RYE":"SCENTS":"SENSE":"SONG":"SWEET":"TRISTAN":"WEDDING":[]
+words1="ADORER":"ARROW":"BOUQUET":"BRIDE":"CARDS":"CARESS":"CHOCOLATE":"COUPLE":"CUPID":"DATE":"DATING":"DEVOTION":"EMBRACE":"FIRST KISS":"GROOM":"HEART":"HUGS":"ISEULT":"JULIET":"LOVE":"LUCK":"LYRE":"ODE":"POEM":"PRESENT":"QUEEN":"RENDEZVOUS":"RING":"ROMEO":"ROSES":"RYE":"SCENTS":"SENSE":"SONG":"SWEET":"TRISTAN":"WEDDING":[]
 table=["JULIETCARESS","WEDDINGROMEO","CHOCOLATERGF","BOUQUETTESRI","SWEETSLRUTOR","PEVETUOONEOS","BONNEDVNRAMT","LRESAZOYGRTK","RCIMEILSDRTI","SIEDTQGUAORS","CRNOEUUECWIS","AEVGHNHEEKSD","REEMBRACEETA","DATINGSRSNAT","SCOUPLEOYSNE","CUPIDPRESENT"]
+
+main = do
+ setTitle "WYKRESLANKA"
+ setSGR[SetColor Foreground Vivid White]
+ wypiszWTerminalu (wykresl (trimTable words1) table)
+ 
+wypiszWTerminalu [] = return ()
+wypiszWTerminalu (x:xs) = do
+ piszWiersz x
+ putStr "\n"
+ wypiszWTerminalu xs
+ 
+piszWiersz [] =return()
+piszWiersz (x:xs) = if (ord x) < 96 then
+ do
+  setSGR[SetColor Foreground Vivid Red]
+  putChar x
+  piszWiersz xs
+ else do
+  setSGR[SetColor Foreground Vivid White]
+  putChar (toUpper x)
+  piszWiersz xs
+
+trimTable []=[]
+trimTable (x:xs) = trimRow x :trimTable xs
+
+trimRow []=[]
+trimRow (x:xs) = if x==' ' || x=='-' then trimRow xs
+ else x:trimRow xs 
+
+
+
+
+
+
+
+
+
 
 -- funkcja sprawdzająca czy litery są takie same bez względu na wielkość. toUpper i toLower są wbudowanymi funkcjami haskella ( nie nadpisywałem operatora '==' gdyż korzystam z niego takżee przy porównywaniu indeksów
 areEqual a b = if a==b || (toUpper a) == b || a==(toUpper b) then True
