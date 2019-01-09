@@ -1,14 +1,27 @@
 ﻿import Data.Char
+import Data.List.Split
 import System.Console.ANSI
 -- dane testowe
-words1="ADORER":"ARROW":"BOUQUET":"BRIDE":"CARDS":"CARESS":"CHOCOLATE":"COUPLE":"CUPID":"DATE":"DATING":"DEVOTION":"EMBRACE":"FIRST KISS":"GROOM":"HEART":"HUGS":"ISEULT":"JULIET":"LOVE":"LUCK":"LYRE":"ODE":"POEM":"PRESENT":"QUEEN":"RENDEZVOUS":"RING":"ROMEO":"ROSES":"RYE":"SCENTS":"SENSE":"SONG":"SWEET":"TRISTAN":"WEDDING":[]
-table=["JULIETCARESS","WEDDINGROMEO","CHOCOLATERGF","BOUQUETTESRI","SWEETSLRUTOR","PEVETUOONEOS","BONNEDVNRAMT","LRESAZOYGRTK","RCIMEILSDRTI","SIEDTQGUAORS","CRNOEUUECWIS","AEVGHNHEEKSD","REEMBRACEETA","DATINGSRSNAT","SCOUPLEOYSNE","CUPIDPRESENT"]
+
+splitText tab=splitOn " " tab
+
+readTable = do
+		 content <- readFile "tabela2.txt"
+		 return (splitText content)
+readWords = do
+		 content <- readFile "slowa2.txt"
+		 return (splitText content)
+--words1="ADORER":"ARROW":"BOUQUET":"BRIDE":"CARDS":"CARESS":"CHOCOLATE":"COUPLE":"CUPID":"DATE":"DATING":"DEVOTION":"EMBRACE":"FIRST KISS":"GROOM":"HEART":"HUGS":"ISEULT":"JULIET":"LOVE":"LUCK":"LYRE":"ODE":"POEM":"PRESENT":"QUEEN":"RENDEZVOUS":"RING":"ROMEO":"ROSES":"RYE":"SCENTS":"SENSE":"SONG":"SWEET":"TRISTAN":"WEDDING":[]
+--table=["JULIETCARESS","WEDDINGROMEO","CHOCOLATERGF","BOUQUETTESRI","SWEETSLRUTOR","PEVETUOONEOS","BONNEDVNRAMT","LRESAZOYGRTK","RCIMEILSDRTI","SIEDTQGUAORS","CRNOEUUECWIS","AEVGHNHEEKSD","REEMBRACEETA","DATINGSRSNAT","SCOUPLEOYSNE","CUPIDPRESENT"]
 
 main = do
+ table <- readTable
+ words1 <- readWords
  setTitle "WYKRESLANKA"
  setSGR[SetColor Foreground Vivid White]
  wypiszWTerminalu (wykresl (trimTable words1) table)
- 
+    
+
 wypiszWTerminalu [] = return ()
 wypiszWTerminalu (x:xs) = do
  piszWiersz x
